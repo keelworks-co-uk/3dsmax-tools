@@ -6,4 +6,4 @@ Small but powerful tool, helps you replace any instanced object with a different
 
 
 In the example below, we have replaced Teapot instances with a box version.
-![](ReplaceInstancesBoxes.JPG)
+![](ReplaceInstancesBoxes.jpg)
