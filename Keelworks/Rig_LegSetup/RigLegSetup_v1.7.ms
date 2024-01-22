@@ -2471,37 +2471,67 @@ rollout mainDialog "Rig: Leg Setup" --define a rollout and create a dialog
         
         on UI_3Setup pressed do 
         (
-			
-            pos = rof.pos -- get parent position
-            pos += [250, 0] -- shift the parent position
+			if RigSetupLoadedFromManager == false  then 	
+			(
+				pos = rof.pos -- get parent position
+				-- create and assign new rollout as a child of the main parent 
+				createDialog threeJointDialog parent:rof.hwnd height:200 width:240 pos:pos
+			)
+			else 
+			(
+				pos = masterRolloutFloat.pos -- get parent position
+				-- create and assign new rollout as a child of the main parent 
+				createDialog threeJointDialog parent:masterRolloutFloat.hwnd height:200 width:240 pos:pos
+			)
+
+			pos += [250, 0] -- shift the parent position	
 			-- define joints setup for this button
 			jointType = 1
-            -- create and assign new rollout as a child of the main parent 
-            createDialog threeJointDialog parent:rof.hwnd height:200 width:240 pos:pos
             setFocus mainDialog
             redrawViews()
         )
 
         on UI_4Setup pressed do 
         (
-            pos = rof.pos -- get parent position
+			if RigSetupLoadedFromManager == false  then 	
+			(
+				pos = rof.pos -- get parent position
+				-- create and assign new rollout as a child of the main parent 
+				createDialog fourJointDialog parent:rof.hwnd height:220 width:240 pos:pos
+			)
+			else 
+			(
+				pos = masterRolloutFloat.pos -- get parent position
+				-- create and assign new rollout as a child of the main parent 
+				createDialog fourJointDialog parent:masterRolloutFloat.hwnd height:220 width:240 pos:pos
+			)
+			
             pos += [250, 0] -- shift the parent position
             jointType = 2
-            setupType = 1
-            -- create and assign new rwollout as a child of the main parent 
-            createDialog fourJointDialog parent:rof.hwnd height:220 width:240 pos:pos
+            setupType = 1			
             setFocus mainDialog
             redrawViews()
         )
 		
 		on UI_5Setup pressed do 
         (
-            pos = rof.pos -- get parent position
-            pos += [250, 0] -- shift the parent position
+
+			if RigSetupLoadedFromManager == false  then 	
+			(
+				pos = rof.pos -- get parent position
+				-- create and assign new rollout as a child of the main parent 
+				createDialog fiveJointDialog parent:rof.hwnd height:220 width:240 pos:pos
+			)
+			else 
+			(
+				pos = masterRolloutFloat.pos -- get parent position
+				-- create and assign new rollout as a child of the main parent 
+				createDialog fiveJointDialog parent:masterRolloutFloat.hwnd height:220 width:240 pos:pos
+			)
+			
+			pos += [250, 0] -- shift the parent position
             jointType = 3
             setupType = 1
-            -- create and assign new rwollout as a child of the main parent 
-            createDialog fiveJointDialog parent:rof.hwnd height:220 width:240 pos:pos
             setFocus mainDialog
             redrawViews()
         )		
@@ -2517,27 +2547,34 @@ rollout mainDialog "Rig: Leg Setup" --define a rollout and create a dialog
     )
 )
 
-
+-- syncornization state variables for Manager/independe mode
+global rof = 1
+global RigSetupLoadedFromManager = false
 
 -- Check if the master Keelworks manager script and loading client scripts
 if globalKeelworksLoading == true  then
 (
-
     -- Add the rollout to the manager rollout window
     addRollout mainDialog masterRolloutFloat
     -- And close/collapse it by default
     mainDialog.open = false
+	
+	RigSetupLoadedFromManager = true
 
 )
 else 
 (
     -- Create a new dialogue window for the rollout
-	rof = newrolloutfloater "Rig: LegSetup v1.7" 240 720
+	global rof = newrolloutfloater "Rig: LegSetup v1.7" 240 720
 	--rof.pos.x += -800
 	--rof.pos.y += -20
 	addrollout mainDialog rof
+	
+	RigSetupLoadedFromManager = false
     
 )
+
+-- print ("RigSetupLoadedFromManager " + (RigSetupLoadedFromManager as string))
 
 )
 
