@@ -1,3 +1,5 @@
+![](coverImageTools.png)
+
 ## Keelworks Script Manager and curated 3DS Max scripts collection
 
 **License: MIT**
